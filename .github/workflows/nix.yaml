@@ -1,0 +1,37 @@
+on: [push]
+jobs:
+  Nix-install:
+    # macos-11 macos-12
+    runs-on: [macos-13]
+
+    steps:
+      - run: |
+          wget https://nixos.org/nix/install
+          chmod a+x install
+      - run: sudo ./install --daemon --yes
+      - run: /nix/var/nix/profiles/default/bin/nix --version
+
+
+# Nix Installer [--daemon|--no-daemon] [--daemon-user-count INT] [--yes] [--no-channel-add] [--no-modify-profile] [--nix-extra-conf-file FILE]
+# Choose installation method.
+#
+#  --daemon:    Installs and configures a background daemon that manages the store,
+#               providing multi-user support and better isolation for local builds.
+#               Both for security and reproducibility, this method is recommended if
+#               supported on your platform.
+#               See https://nixos.org/manual/nix/stable/installation/installing-binary.html#multi-user-installation
+#
+#  --no-daemon: Simple, single-user installation that does not require root and is
+#               trivial to uninstall.
+#               (default)
+#
+#  --yes:               Run the script non-interactively, accepting all prompts.
+#
+#  --no-channel-add:    Don't add any channels. nixpkgs-unstable is installed by default.
+#
+#  --no-modify-profile: Don't modify the user profile to automatically load nix.
+#
+#  --daemon-user-count: Number of build users to create. Defaults to 32.
+#
+#  --nix-extra-conf-file: Path to nix.conf to prepend when installing /etc/nix/nix.conf
+#
