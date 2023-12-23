@@ -5,11 +5,17 @@ jobs:
     runs-on: [macos-13]
 
     steps:
+      - uses: actions/checkout@v1
+
+      - run: xcodebuild -project NixManager.xcodeproj build
+
       - run: |
           wget https://nixos.org/nix/install
           chmod a+x install
       - run: sudo ./install --daemon --yes
       - run: /nix/var/nix/profiles/default/bin/nix --version
+
+      - run: xcodebuild -project NixManager.xcodeproj test -scheme NixManagerTests
 
 
 # Nix Installer [--daemon|--no-daemon] [--daemon-user-count INT] [--yes] [--no-channel-add] [--no-modify-profile] [--nix-extra-conf-file FILE]
